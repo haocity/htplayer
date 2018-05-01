@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		
+		<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_648784_5dxjlcr5t63cjtt9.css"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<script src="js/htplayer.js" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	<body>
+		<div style="height: 800px;"></div>
+		<div class="htplayer-w">
+			<div class="htplayer">
+				
+				<div class="ht-m">
+					<video class="ht-video" src='https://t4.haotown.cn/danmu/res/1.mp4'></video>
+				</div>
+				
+				<div class="ht-dm"></div>
+				<div class="ht-con-wrap">
+					<div class="ht-con">
+					<div class="ht-r">
+						<div class="ht-r-m">
+							<div class="ht-r1"></div>
+							<div class="ht-r2"></div>
+						</div>
+						<div class="ht-r-tip">0:00</div>
+					</div>
+					<div class="ht-con-w">
+						<div class="btn iconfont icon-play"></div>
+						<div class="time">
+							<span class="time-now">0:08</span>
+							/
+							<span  class="time-all">4:00</span>
+						</div>
+						<div class="dmsend-w">
+							<input type="text" placeholder="(」·ω·)」唔！(／·ω·)／喵！ (」·ω·)」唔！(／·ω·)／喵！">
+							
+						</div>
+						
+						<div class="qxd">
+							<div class="qxd-m">
+								<div class="qxd-i">普清</div>
+								<div class="qxd-i">高清</div>
+								<div class="qxd-i">超清</div>
+							</div>
+							<div class="qxd-n">高清</div>
+						</div>
+						
+						<div class="yl">
+							<div class="yl-m">
+								<div class="yl-number">62</div>
+								<div class="yl-t">
+									<div class="yl-t-m">
+										<div class="yl-t1"></div>
+										<div class="yl-t2"></div>
+									</div>
+								</div>
+							</div>
+							<div class="yl-n btn iconfont icon-yinliang small"></div>
+						</div>
+						
+						
+						<div class="dm-s">
+							<div class="dm-s-m">
+								<div class="box">
+									<input type="checkbox" class="ht-checkbox hcx1"  />
+									<label></label>
+									<label>滚动</label>
+									<input type="checkbox"  class="ht-checkbox hcx2" />
+									<label></label>
+									<label>顶部</label>
+									<input type="checkbox"  class="ht-checkbox hcx3" />
+									<label></label>
+									<label>底部</label>
+								</div>
+								<div class="box">
+									<input type="checkbox"  class="ht-checkbox hcx4" />
+									<label></label>
+									<label>高级弹幕</label>
+									<input type="checkbox"  class="ht-checkbox hcx5"/>
+									<label></label>
+									<label>弹幕阴影</label>	
+								</div>	
+								<div class="box">
+									<span>透明度</span>
+									<input type="range" class="hre1" value="100" min="20" max="100" />
+								</div>
+								<div class="box">
+									<span>&ensp;缩&ensp;放&ensp;</span>
+									<input type="range" class="hre2" value="50" min="1" max="100" />
+								</div>
+								
+							</div>
+							<div class="dm-n iconfont icon-bofangqi-danmuguan btn"></div>
+						</div>
+						
+						
+						<div class=" btn iconfont icon-shezhi1 small"></div>
+						
+						<div class=" btn iconfont icon-xunhuan small"></div>
+						
+						<div class=" btn iconfont icon-quanping small full"></div>
+						
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="htplayer-right">
+				
+			</div>
+			<style type="text/css" class="css">
+				
+			</style>
+		</div>
+		
+		<script type="text/javascript">
+			let v1=new htplayer({
+				danmaku:['https://api.haotown.cn/danmaku/get/?id=1']
+			});
+		</script>
+		<div style="height: 800px;"></div>
+	</body>
+</html>
