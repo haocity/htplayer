@@ -10,17 +10,12 @@
 		<script src="js/htplayer.js" type="text/javascript" charset="utf-8"></script>
 		
 	</head>
-	<body>
+	<body style="    background: #f8f8f8;">
 		<div style="height: 800px;"></div>
+		<div class="v-wrap" style="width: 1400px;margin: 0 auto; height: 800px;">
 		<div class="htplayer-w">
-			<div class="htplayer">
-				
-				<div class="ht-m">
-					<video class="ht-video" src='https://t4.haotown.cn/danmu/res/1.mp4'></video>
-				</div>
-				
-				<div class="ht-dm"></div>
-				<div class="ht-con-wrap">
+			<div class="ht-con-wrap">
+					
 					<div class="ht-con">
 					<div class="ht-r">
 						<div class="ht-r-m">
@@ -103,23 +98,46 @@
 						
 						<div class=" btn iconfont icon-xunhuan small"></div>
 						
-						<div class=" btn iconfont icon-quanping small full"></div>
+						<div class=" btn iconfont icon-quanping small full-btn"></div>
 						
 					</div>
 				</div>
 			</div>
+			<div class="htplayer">
+				
+				<div class="ht-m">
+					<video class="ht-video" src='1.mp4'></video>
+				</div>
+				
+				<div class="ht-dm"></div>
+				
 			</div>
 			<div class="htplayer-right">
+				<div class="htplayer-right-close">▶</div>
+				<div class="ht-r-title ht-plr">
+					<span class="ht-live"><span class="ht-live-m">9</span>个小伙伴陪你看,632</span>
+				</div>
+					<div class="ht-danmaku-list-title ht-plr">
+						<div class="htdli-time">时间</div>
+						<div >弹幕内容</div>
+					</div>
+					<ul class="ht-danmaku-list ht-plr">
+						
+					</ul>
 				
 			</div>
 			<style type="text/css" class="css">
 				
 			</style>
 		</div>
-		
+		</div>
 		<script type="text/javascript">
 			let v1=new htplayer({
-				danmaku:['https://api.haotown.cn/danmaku/get/?id=1']
+				video:[
+				{type:'流畅',type:'mp4',url:'1.mp4'}
+				],
+				danmaku:['https://api.haotown.cn/danmaku/get/?id=1'],
+				showright:true
 			});
 		</script>
 		<div style="height: 800px;"></div>

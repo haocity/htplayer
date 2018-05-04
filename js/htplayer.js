@@ -26,7 +26,7 @@ class htplayer {
         this.ele = {
 			'css': $c('css'),
             'video': $c('ht-video'),
-            'warp': $c('htplayer-w'),
+            'wrap': $c('htplayer-w'),
             'main': $c('htplayer'),
             'play': $c('icon-play'),
             'nowtime': $c('time-now'),
@@ -42,16 +42,61 @@ class htplayer {
             'ylbtn': $c('yl-n'),
             'vloop': $c('icon-xunhuan'), //循环
             'dm': $c('ht-dm'), //弹幕层
-            'full': $c('full'),
-						'dm_s':$c('dm-s'),//弹幕开关
-						'hcx':[$c('hcx1'),$c('hcx2'),$c('hcx3'),$c('hcx4'),$c('hcx5')],
-						'alldm':$c('dm-n'),//弹幕总开关
-						'hre1':$c('hre1'),//ranger
-						'hre2':$c('hre2'),
+            'full': $c('full-btn'),
+			'dm_s':$c('dm-s'),//弹幕开关
+			'hcx':[$c('hcx1'),$c('hcx2'),$c('hcx3'),$c('hcx4'),$c('hcx5')],
+			'alldm':$c('dm-n'),//弹幕总开关
+			'hre1':$c('hre1'),//ranger
+			'hre2':$c('hre2'),
+			'htbar':$c('ht-con'),//控制菜单
+			'right':$c('htplayer-right'),//右侧栏
+			'dmlist':$c('ht-danmaku-list'),//弹幕列表
+			'rightclose':$c('htplayer-right-close'),//关闭侧边栏
         }
+		//非全屏htbar显示
+		
+		
+		this.ele.htbar.style.bottom=-this.ele.htbar.offsetHeight+'px';
+		this.ele.htbar.a=true
+		//高度
+		this.ele.wrap.style.height=this.ele.wrap.offsetWidth*0.5625+'px'
+		
+		//right
+		if(this.options.showright){
+			this.ele.right.style.width='360px'
+		}else{
+			this.ele.right.style.display='none'
+		}
+		
+		
+		//配置
+		if(localStorage.getItem('htconfig') && localStorage.getItem('htconfig') != "undefined") {
+			
+			for (let i = 0; i < this.ele.hcx.length; i++) {
+				this.ele.hcx[i].checked=true
+			}
+			
+        	this.config = JSON.parse(localStorage.getItem('htconfig'))
+        	console.log('加载设置成功')
+        } else {
+			this.config = new Object()
 
+        }
+		
+		this.changerconfig()
+        //设置音量
+        this.setsound(this.config.sound)
+		
+		
         this.data = this.initdata()
-
+				
+				//侧边栏
+				if(this.options.showright){
+					this.ele.right.style.minHeight=this.data.height+'px'
+					this.ele.dmlist.style.maxHeight=this.data.height-94+'px'
+				}
+				
+				
         this.danmaku = []//bak弹幕库
 		
 		this.danmakuarr={}
@@ -75,22 +120,7 @@ class htplayer {
         }
 
 
-        if(localStorage.getItem('htconfig') && localStorage.getItem('htconfig') != "undefined") {
-			
-			for (let i = 0; i < this.ele.hcx.length; i++) {
-				this.ele.hcx[i].checked=true
-			}
-			
-        	this.config = JSON.parse(localStorage.getItem('htconfig'))
-        	console.log('加载设置成功')
-        } else {
-			this.config = new Object()
-
-        }
-		
-		this.changerconfig()
-        //设置音量
-        this.setsound(this.config.sound)
+       
 
 
 
@@ -187,7 +217,7 @@ class htplayer {
 
         this.ele.full.addEventListener("click", () => {
             //全屏切换
-            let e = this.ele.main
+            let e = this.ele.wrap
             if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement) {
                 if (document.cancelFullScreen) {
                     document.cancelFullScreen()
@@ -209,11 +239,11 @@ class htplayer {
 
         });
         let screenChange = 'webkitfullscreenchange' || 'mozfullscreenchange' || 'fullscreenchange'
-        this.ele.main.addEventListener(screenChange, () => {
+        this.ele.wrap.addEventListener(screenChange, () => {
             this.joinfull()
         }, false);
 		
-		//弹幕开关
+		//弹幕菜单
 		this.ele.dm_s.addEventListener('mouseenter',function(){
 			if(this.t){
 				clearTimeout(this.t)
@@ -265,9 +295,39 @@ class htplayer {
 			this.config.danmakusize=t;
 			console.log(t)
 			this.changerconfig()
+			let e=this.ele.dm.querySelectorAll('.ht-left')
+			for (let i = 0; i < e.length; i++) {
+				e[i].style.transform =  "translateX(-" + this.data.width / this.config.danmakusize + "px)"
+			}
 		})
 		
-		//this.config.danmakusize
+		//鼠标隐藏
+		this.ele.dm.addEventListener('mousemove',()=>{
+			if(!this.ele.htbar.a){
+				if(this.mt){
+					clearTimeout(this.mt)
+				}
+				if(this.ele.htbar.style.opacity!='1'){
+					this.ele.htbar.style.opacity='1'
+					this.ele.dm.style.cursor="default"
+				}
+				this.mt=setTimeout(()=>{
+					this.ele.htbar.style.opacity='0'
+					this.ele.dm.style.cursor="none"
+				},2000)
+			}else{
+				this.ele.htbar.style.opacity='1'
+				this.ele.dm.style.cursor="default"
+			}
+		})
+		this.ele.rightclose.addEventListener('click',()=>{
+			if(this.ele.right.style.display!="none"){
+				this.ele.right.style.display	='none'
+			}else{
+				this.ele.right.style.display	='block'
+			}
+		
+		})
 		
 		
         //弹幕循环
@@ -289,7 +349,7 @@ class htplayer {
 
                 //弹幕定时器
                 for (let i = 0; i < this.nowdm.length; i++) {
-                    if (this.nowdm[i] && this.nowdm[i].time && this.nowdm[i].time == parseInt(this.ele.video
+                    if (this.nowdm[i] && this.nowdm[i].time && this.nowdm[i].time <= parseInt(this.ele.video
                             .currentTime * 10)) {
                         this.nowdm[i].call()
                         delete this.nowdm[i];
@@ -661,35 +721,52 @@ class htplayer {
 
     initdata() {
         $c('yl-m').style.display = 'block'
+				
         let obj = {
-            left: this.getLeft(this.ele.main),
-            top: this.getTop(this.ele.main),
-            height: this.ele.main.offsetHeight,
-            width: this.ele.main.offsetWidth,
-            ytop: this.getTop(this.ele.yltm), //音量条
+            left: this.getLeft(this.ele.wrap),
+            top: this.getTop(this.ele.wrap),
+            height: this.ele.wrap.offsetHeight,
+            width: this.ele.wrap.offsetWidth,
+            ytop: this.getTop(this.ele.yltm),//音量条
             yheight: this.ele.yltm.offsetHeight,
-            speedt: this.ele.main.offsetWidth / 100, //速度
+            speedt: this.ele.wrap.offsetWidth / 100, //速度
         }
         $c('yl-m').style.display = 'none'
-
+		
         return obj
     }
     //全屏
     joinfull() {
         let isfull = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement
         if (isfull) {
-            if (this.ele.main == isfull) {
+            if (this.ele.wrap == isfull) {
                 console.log('进入全屏')
+								addClass(this.ele.wrap,'full')
+				this.ele.htbar.style.bottom='0px';
+				this.ele.htbar.a=false
                 this.data = this.initdata()
 				let e=this.ele.dm.querySelectorAll('.ht-left')
 				for (let i = 0; i < e.length; i++) {
 					e[i].style.transform =  "translateX(-" + this.data.width / this.config.danmakusize + "px)"
 				}
+				setTimeout(()=>{
+					this.data = this.initdata()
+				},2000)
+				//防止卡住 出现奇怪bug
 				
             }
         } else {
             console.log('退出')
+					 removeClass(this.ele.wrap,'full')
+			this.ele.htbar.style.bottom=-this.ele.htbar.offsetHeight+'px'
+			this.ele.htbar.style.opacity='1'
+			this.ele.htbar.a=true
             this.data = this.initdata()
+			setTimeout(()=>{
+				this.data = this.initdata()
+			},2000)
+			//防止卡住 出现奇怪bug
+			
         }
 
     }
@@ -697,10 +774,23 @@ class htplayer {
     adddanmaku(url = 'https://api.haotown.cn/danmaku/get/?id=1') {
         fetch(url).then((t) => t.json()).then((json) => {
             if (json.data) {
+							  let html=''
                 for (let i = 0; i < json.data.length; i++) {
                     this.danmaku.push(json.data[i])
+										if(this.options.showright){
+											let t=this.getvideotime(json.data[i].time/10)
+											html+=`<li class="htdli">
+															<div class="htdli-time">${t.m}:${t.s}</div>
+															<div class='htdlit'>${json.data[i].text}</div>
+														</li>
+														`
+										}
                 }
                 console.log('add danmuka success')
+								if(html){
+									 this.ele.dmlist.innerHTML+=html
+								}
+								
                 this.nowdanmaku = this.danmaku.slice(0)
             }
         })
