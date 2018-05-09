@@ -52,7 +52,16 @@ class htplayer {
 			'right':$c('htplayer-right'),//右侧栏
 			'dmlist':$c('ht-danmaku-list'),//弹幕列表
 			'rightclose':$c('htplayer-right-close'),//关闭侧边栏
-        }
+			'rightmenu':{
+				main:$c('tp-rightmenu'),//右键菜单
+				copy:$c("tp-copy-warp"),
+				copytext:$c("tp-copy-input"),
+				deldanmu:$c('tp-deldanmu'),
+				speendw:$c('tp-speend-con'),
+				speend:$c('tp-speend'),
+			}
+				
+      }
 		//非全屏htbar显示
 		
 		
@@ -204,15 +213,26 @@ class htplayer {
         this.ele.vloop.addEventListener('click', () => {
             if (this.ele.video.loop) {
                 this.ele.vloop.className = 'btn iconfont icon-xunhuan small'
-                this.ele.video.loop = false
+                this.loop = false
             } else {
                 this.ele.vloop.className = 'btn iconfont icon-xunhuan small active'
-                this.ele.video.loop = true
+                this.loop = true
             }
         })
 
+				this.ele.video.addEventListener('ended', () => {
+					if(this.loop){
+						this.tiao(0)
+					}
+				})
+				
         this.ele.dm.addEventListener('click', () => {
-            this.playswitch()
+					if(this.ele.rightmenu.main.style.display!='block'){
+						 this.playswitch()
+					}else{
+						this.ele.rightmenu.main.style.display='none'
+					}
+           
         })
 
         this.ele.full.addEventListener("click", () => {
@@ -328,7 +348,60 @@ class htplayer {
 			}
 		
 		})
+		//右键菜单
+		this.ele.dm.oncontextmenu = (e)=>{
+			console.log('右键菜单')
+			let ele=this.ele.rightmenu
+			ele.main.style.display='block'
+			let top=e.pageY-this.data.top
+			let left=e.pageX-this.data.left
+			let h=ele.main.offsetHeight;
+			let w=ele.main.offsetWidth;
+			if(top>this.data.height-h){
+				top=this.data.height-h
+			}
+			
+			if(left>this.ele.dm.offsetWidth*this.config.danmakusize-w){
+				left=this.ele.dm.offsetWidth*this.config.danmakusize-w
+			}
+			if(hasClass(e.target,'danmaku')){
+				ele.copytext.value=e.target.innerText
+				ele.copy.style.display='block'
+				ele.deldanmu.style.display='block'
+				this.ele.rightmenu.deldanmu.onclick =()=> {
+					e.target.parentNode.removeChild(e.target)
+					this.ele.rightmenu.main.style.display = "none";
+				}
+			}else{
+				ele.deldanmu.style.display='none'
+				ele.copy.style.display='none'
+			}
+			ele.main.style.top=top+'px'
+			ele.main.style.left=left+'px'
+			return false
+		}
+		this.ele.rightmenu.copy.onclick =()=> {
+						this.ele.rightmenu.copytext.select();
+						document.execCommand("Copy");
+						this.ele.rightmenu.main.style.display = "none";
+		}
 		
+		this.ele.rightmenu.speendw.addEventListener('click',()=>{
+			let r=this.ele.rightmenu.speend
+			if(r.style.display!='block'){
+				r.style.display='block'
+			}else{
+				r.style.display='none'
+			}
+		})
+		this.ele.rightmenu.speend.addEventListener('click',(e)=>{
+			if(e.target.innerText>0){
+				console.log(e.target.innerText)
+				this.ele.video.playbackRate=e.target.innerText
+			}else{
+				this.ele.video.playbackRate=1
+			}
+		});
 		
         //弹幕循环
         setInterval(() => {
