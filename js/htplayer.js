@@ -52,13 +52,14 @@ class htplayer {
 			'right':$c('htplayer-right'),//右侧栏
 			'dmlist':$c('ht-danmaku-list'),//弹幕列表
 			'rightclose':$c('htplayer-right-close'),//关闭侧边栏
+			'end':$c('ht-end'),//结束
 			'rightmenu':{
-				main:$c('tp-rightmenu'),//右键菜单
-				copy:$c("tp-copy-warp"),
-				copytext:$c("tp-copy-input"),
-				deldanmu:$c('tp-deldanmu'),
-				speendw:$c('tp-speend-con'),
-				speend:$c('tp-speend'),
+				main:$c('ht-rightmenu'),//右键菜单
+				copy:$c("ht-copy-warp"),
+				copytext:$c("ht-copy-input"),
+				deldanmu:$c('ht-deldanmu'),
+				speendw:$c('ht-speend-con'),
+				speend:$c('ht-speend'),
 			}
 				
       }
@@ -223,7 +224,18 @@ class htplayer {
 				this.ele.video.addEventListener('ended', () => {
 					if(this.loop){
 						this.tiao(0)
+					}else{
+						this.ele.end.style.display='block'
+						this.ele.play.className = 'btn iconfont icon-play'
+						this.ele.play.end=true
+						setTimeout(()=>{
+							this.ele.end.style.opacity=1
+						},100)
 					}
+				})
+				this.ele.end.addEventListener('click',()=>{
+					this.tiao(0)
+					this.ele.end.style.display='none';
 				})
 				
         this.ele.dm.addEventListener('click', () => {
@@ -744,6 +756,11 @@ class htplayer {
     }
 
     play() {
+				if(this.ele.play.end){
+					this.ele.end.style.display='none';
+					this.ele.play.end=false
+					this.tiao(0)
+				}
         let e = document.querySelectorAll('.danmaku')
         for (let i = e.length - 1; i >= 0; i--) {
             removeClass(e[i], "ht-suspend");
