@@ -52,6 +52,7 @@ class htplayer {
 			'right':$c('htplayer-right'),//右侧栏
 			'dmlist':$c('ht-danmaku-list'),//弹幕列表
 			'rightclose':$c('htplayer-right-close'),//关闭侧边栏
+			'rightclose2':$c('htplayer-right-c2'),//关闭侧边栏
 			'end':$c('ht-end'),//结束
 			'rightmenu':{
 				main:$c('ht-rightmenu'),//右键菜单
@@ -60,6 +61,7 @@ class htplayer {
 				deldanmu:$c('ht-deldanmu'),
 				speendw:$c('ht-speend-con'),
 				speend:$c('ht-speend'),
+				video_ratio:$c('ht-ratio'),//视频比例
 			}
 				
       }
@@ -352,6 +354,7 @@ class htplayer {
 				this.ele.dm.style.cursor="default"
 			}
 		})
+		
 		this.ele.rightclose.addEventListener('click',()=>{
 			if(this.ele.right.style.display!="none"){
 				this.ele.right.style.display	='none'
@@ -360,6 +363,10 @@ class htplayer {
 			}
 		
 		})
+		this.ele.rightclose2.addEventListener('click',()=>{
+			this.ele.rightclose.click()
+		})
+		
 		//右键菜单
 		this.ele.dm.oncontextmenu = (e)=>{
 			console.log('右键菜单')
@@ -414,7 +421,69 @@ class htplayer {
 				this.ele.video.playbackRate=1
 			}
 		});
+		//视频比例设置
+		this.ele.rightmenu.video_ratio.ratio = 1;
+		this.ele.rightmenu.video_ratio.addEventListener('click', ()=>{
+					let vh=this.ele.video.videoHeight
+		      let vw=this.ele.video.videoWidth
+					if(this.ele.rightmenu.video_ratio.ratio == 1) {
+						this.ele.rightmenu.video_ratio.ratio = 2;
+			      let vb= vw*0.75/vh
+			      if(vb>1){
+			        this.ele.video.style.transform=`scale(${1/vb},1)`
+			        this.ele.video.style.webkitTransform=`scale(${1/vb},1)`
+			      }else{
+			        this.ele.video.style.transform=`scale(1,${vb})`
+			        this.ele.video.style.webkitTransform=`scale(1,${vb})`
+			       }
+						this.ele.rightmenu.video_ratio.innerText = `视频比例 4:3`
+					} else if(this.ele.rightmenu.video_ratio.ratio == 2) {
+						this.ele.rightmenu.video_ratio.ratio = 3
+						let vb= vw*0.5625/vh
+			       if(vb>1){
+			           		this.ele.video.style.transform=`scale(${1/vb},1)`
+			            	this.ele.video.style.webkitTransform=`scale(${1/vb},1)`
+			       }else{
+			           		this.ele.video.style.transform=`scale(1,${vb})`
+			            	this.ele.video.style.webkitTransform=`scale(1,${vb})`
+			       }
+						this.ele.rightmenu.video_ratio.innerText = `视频比例 16:9`
+					} else if(this.ele.rightmenu.video_ratio.ratio == 3) {
+						this.ele.rightmenu.video_ratio.ratio = 4
+						this.ele.rightmenu.video_ratio.innerText = `视频比例 全屏`
+						this.ele.video.style.transform = `none`
+						this.ele.video.style.webkitTransform = `none`
+						
+						this.ele.video.style.height = 'auto';
+						this.ele.video.style.width = 'auto';
+						
+					
+							let w1=this.ele.video.parentNode.offsetWidth
+							let w2=this.ele.video.offsetWidth
+							let h1=this.ele.video.parentNode.offsetHeight
+							let h2=this.ele.video.offsetHeight
+						
+							this.ele.video.style.transform = `scale(${w1/w2},${h1/h2})`
+							this.ele.video.style.webkitTransform = `scale(${w1/w2},${h1/h2})`
+						
+						this.ele.video.style.transformOrigin = 'left top'
+						this.ele.video.style.webkitTransformOrigin = 'left top'
+					
+					} else {
+						
+							this.ele.video.style.height = '100%';
+							this.ele.video.style.width = '100%';
+							this.ele.video.style.webkitTransformOrigin = 'center'
+						
+						this.ele.rightmenu.video_ratio.ratio = 1
+						this.ele.rightmenu.video_ratio.innerText = `视频比例 默认`
+						this.ele.video.style.transform = `none`
+						this.ele.video.style.webkitTransform = `none`
+					}
 		
+				})
+				
+				
         //弹幕循环
         setInterval(() => {
             if (this.playing) {
@@ -827,6 +896,17 @@ class htplayer {
     }
     //全屏
     joinfull() {
+			
+			//缩放回归
+			this.ele.video.style.height = '100%';
+			this.ele.video.style.width = '100%';
+			this.ele.video.style.webkitTransformOrigin = 'center'
+			
+			this.ele.rightmenu.video_ratio.ratio = 1
+			this.ele.rightmenu.video_ratio.innerText = `视频比例 默认`
+			this.ele.video.style.transform = `none`
+			this.ele.video.style.webkitTransform = `none`
+				
         let isfull = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement
         if (isfull) {
             if (this.ele.wrap == isfull) {
@@ -839,6 +919,9 @@ class htplayer {
 				for (let i = 0; i < e.length; i++) {
 					e[i].style.transform =  "translateX(-" + this.data.width / this.config.danmakusize + "px)"
 				}
+				
+				
+				
 				setTimeout(()=>{
 					this.data = this.initdata()
 				},2000)
@@ -847,6 +930,7 @@ class htplayer {
             }
         } else {
             console.log('退出')
+						
 					 removeClass(this.ele.wrap,'full')
 			this.ele.htbar.style.bottom=-this.ele.htbar.offsetHeight+'px'
 			this.ele.htbar.style.opacity='1'
