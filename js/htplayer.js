@@ -995,6 +995,35 @@ class htplayer {
 		localStorage.setItem('htconfig', JSON.stringify(this.config));
 		this.changercss()
 	}
+	msgbox(a){
+		if(!a.m){
+			a.m=a
+		}
+		
+		let e1=document.createElement('div')
+		e1.className='ht-box-w'
+		let e2=document.createElement('div')
+		e2.className='ht-box-m'
+		let e3=document.createElement('div')
+		e3.className='ht-box-b'
+		e3.onclick=function () {
+		
+			e1.parentNode.removeChild(e1)
+		}
+		e3.innerText=a.b||'确定'
+		e2.innerHTML=a.m;
+		e1.appendChild(e2)
+		e1.appendChild(e3)
+		if(a.width){
+			e1.style.width=a.width
+		}
+		
+		if(a.height){
+			e1.style.height=a.height
+		}
+		this.ele.main.appendChild(e1)
+	}
+	
 	changercss(){
 		let t=this.options.Element||'body'
 		function opacity(a) {

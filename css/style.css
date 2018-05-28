@@ -2,6 +2,37 @@
 	margin: 0;
 	padding: 0;
 }
+.ht-box-w{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	padding: 10px;
+	background-color: #F0F0F0;
+	height: 230px;
+    width: 400px;
+	border-radius: 10px;
+	
+}
+.ht-box-m{
+	min-height: 140px;
+	padding-bottom: 30px;
+
+}
+.ht-box-b{
+    width: 60px;
+    text-align: center;
+    margin: 0 auto;
+    background-color: #3083f9;
+    color: #fff;
+    font-size: 20px;
+    line-height: 40px;
+    padding: 0 18px;
+	cursor: pointer;
+	
+}
 .ht-end{
 	display: none;
 	height: 100%;
