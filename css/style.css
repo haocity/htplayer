@@ -2,24 +2,31 @@
 	margin: 0;
 	padding: 0;
 }
-.ht-box-w{
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-	padding: 10px;
-	background-color: #F0F0F0;
-	height: 230px;
-    width: 400px;
+.ht-box-w {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+.ht-box-w2 {
+    display: inline-block;
+    background-color: #fff;
+    padding: 10px 30px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+	-webkit-transform:translate(-50%,-50%) ;
 	border-radius: 10px;
-	
+	    z-index: 9999;
 }
 .ht-box-m{
-	min-height: 140px;
-	padding-bottom: 30px;
-
+    min-height: 140px;
+    padding-bottom: 10px;
+}
+.tp-screenshot-canvas{
+	height: auto;
+	width: 300px
 }
 .ht-box-b{
     width: 60px;

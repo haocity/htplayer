@@ -62,6 +62,7 @@ class htplayer {
 				speendw:$c('ht-speend-con'),
 				speend:$c('ht-speend'),
 				video_ratio:$c('ht-ratio'),//视频比例
+				screenshot:$c('ht-screenshot'),//截图
 			}
 				
       }
@@ -482,6 +483,21 @@ class htplayer {
 					}
 		
 				})
+				this.ele.rightmenu.screenshot.addEventListener('click',()=>{
+					this.ele.rightmenu.main.style.display = "none";
+					let c = document.createElement('canvas');
+					c.width = this.ele.video.videoWidth
+					c.height = this.ele.video.videoHeight
+					c.getContext('2d').drawImage(this.ele.video, 0, 0, c.width, c.height);
+					c.className = 'tp-screenshot-canvas'
+					let warp = document.createElement("div");
+					warp.innerHTML = '<p style="padding-bottom:10px">请右键保存截图</p>'
+					warp.appendChild(c)
+					this.msgbox({m:warp})
+					
+					
+				})
+				
 				
 				
         //弹幕循环
@@ -996,24 +1012,28 @@ class htplayer {
 		this.changercss()
 	}
 	msgbox(a){
-		if(!a.m){
-			a.m=a
-		}
-		
+		let e0=document.createElement('div')
+		e0.className='ht-box-w'
 		let e1=document.createElement('div')
-		e1.className='ht-box-w'
+		e1.className='ht-box-w2'
 		let e2=document.createElement('div')
 		e2.className='ht-box-m'
 		let e3=document.createElement('div')
 		e3.className='ht-box-b'
-		e3.onclick=function () {
-		
-			e1.parentNode.removeChild(e1)
+		e3.onclick=function (e) {
+			e1.parentNode.removeChild(e1);
+		}
+		e0.onclick=function (e) {
+			if(e.target==this){
+				this.parentNode.removeChild(this)
+			}	
 		}
 		e3.innerText=a.b||'确定'
-		e2.innerHTML=a.m;
+		
+		e2.appendChild(a.m);
 		e1.appendChild(e2)
 		e1.appendChild(e3)
+		e0.appendChild(e1)
 		if(a.width){
 			e1.style.width=a.width
 		}
@@ -1021,7 +1041,7 @@ class htplayer {
 		if(a.height){
 			e1.style.height=a.height
 		}
-		this.ele.main.appendChild(e1)
+		this.ele.main.appendChild(e0)
 	}
 	
 	changercss(){
