@@ -215,7 +215,7 @@ class htplayer {
 
         //循环播放
         this.ele.vloop.addEventListener('click', () => {
-            if (this.ele.video.loop) {
+            if (this.loop) {
                 this.ele.vloop.className = 'btn iconfont icon-xunhuan small'
                 this.loop = false
             } else {
