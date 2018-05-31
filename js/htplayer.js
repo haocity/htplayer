@@ -489,7 +489,7 @@ class htplayer {
 					c.width = this.ele.video.videoWidth
 					c.height = this.ele.video.videoHeight
 					c.getContext('2d').drawImage(this.ele.video, 0, 0, c.width, c.height);
-					c.className = 'tp-screenshot-canvas'
+					c.className = 'ht-screenshot-canvas'
 					let warp = document.createElement("div");
 					warp.innerHTML = '<p style="padding-bottom:10px">请右键保存截图</p>'
 					warp.appendChild(c)
