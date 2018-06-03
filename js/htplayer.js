@@ -316,6 +316,8 @@ class htplayer {
 			}
 			this.changerconfig()
 		})
+
+		
 		
 		//透明度条
 		this.ele.hre1.addEventListener('change',()=>{

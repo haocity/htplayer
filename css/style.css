@@ -47,9 +47,15 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #000;
+    background-color: #4a4949;
 	opacity: 0;
 	transition: opacity 1s;
+}
+.ht-end>img{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	height: 200px;
 }
 .full{
 	height: 100%!important;
