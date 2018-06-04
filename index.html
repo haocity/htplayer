@@ -45,9 +45,7 @@
 						
 						<div class="qxd">
 							<div class="qxd-m">
-								<div class="qxd-i">普清</div>
-								<div class="qxd-i">高清</div>
-								<div class="qxd-i">超清</div>
+								
 							</div>
 							<div class="qxd-n">高清</div>
 						</div>
@@ -135,7 +133,7 @@
 						<li>About htplayer</li></a>
 				</ul>
 				<div class="ht-m">
-					<video class="ht-video" src='http://t4.haotown.cn/danmu/res/1.mp4'></video>
+					<video class="ht-video" src=''></video>
 				</div>
 				
 				<div class="ht-dm"></div>
@@ -167,9 +165,12 @@
 		<script type="text/javascript">
 			let v1=new htplayer({
 				video:[
-				{type:'流畅',type:'mp4',url:'http://t4.haotown.cn/danmu/res/1.mp4'}
+					{text:'流畅',type:'mp4',url:'http://t4.haotown.cn/danmu/res/1.mp4'},
+					{text:'高清',type:'mp4',url:'http://t4.haotown.cn/danmu/res/1.mp4',default:true},
+					{text:'超清',type:'mp4',url:'http://t4.haotown.cn/danmu/res/1.mp4'}
 				],
 				danmaku:['https://api.haotown.cn/danmaku/get/?id=1'],
+				sendapi:'https://api.haotown.cn/danmaku/send/?id=1',
 				showright:true
 			});
 		</script>
