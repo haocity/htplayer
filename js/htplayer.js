@@ -23,6 +23,153 @@ class htplayer {
         this.init()
     }
     init() {
+			
+			let html=`<div class="htplayer-w">
+			<div class="ht-con-wrap">
+					<div class="ht-con">
+					<div class="ht-r">
+						<div class="ht-r-m">
+							<div class="ht-r1"></div>
+							<div class="ht-r2"></div>
+						</div>
+						<div class="ht-r-tip">0:00</div>
+					</div>
+					<div class="ht-con-w">
+						<div class="btn iconfont icon-play"></div>
+						<div class="time">
+							<span class="time-now">0:08</span>
+							/
+							<span  class="time-all">4:00</span>
+						</div>
+						<div class="dmsend-w">
+							<input class="dmsend" type="text" placeholder="(」·ω·)」唔！(／·ω·)／喵！ (」·ω·)」唔！(／·ω·)／喵！">
+						</div>
+						
+						<div class="qxd">
+							<div class="qxd-m">
+								
+							</div>
+							<div class="qxd-n">高清</div>
+						</div>
+						
+						<div class="yl">
+							<div class="yl-m">
+								<div class="yl-number">62</div>
+								<div class="yl-t">
+									<div class="yl-t-m">
+										<div class="yl-t1"></div>
+										<div class="yl-t2"></div>
+									</div>
+								</div>
+							</div>
+							<div class="yl-n btn iconfont icon-yinliang small"></div>
+						</div>
+						
+						
+						<div class="dm-s">
+							<div class="dm-s-m">
+								<div class="box">
+									<input type="checkbox" class="ht-checkbox hcx1"  />
+									<label></label>
+									<label>滚动</label>
+									<input type="checkbox"  class="ht-checkbox hcx2" />
+									<label></label>
+									<label>顶部</label>
+									<input type="checkbox"  class="ht-checkbox hcx3" />
+									<label></label>
+									<label>底部</label>
+								</div>
+								<div class="box">
+									<input type="checkbox"  class="ht-checkbox hcx4" />
+									<label></label>
+									<label>高级弹幕</label>
+									<input type="checkbox"  class="ht-checkbox hcx5"/>
+									<label></label>
+									<label>弹幕阴影</label>	
+								</div>	
+								<div class="box">
+									<span>透明度</span>
+									<input type="range" class="hre1" value="100" min="20" max="100" />
+								</div>
+								<div class="box">
+									<span>&ensp;缩&ensp;放&ensp;</span>
+									<input type="range" class="hre2" value="50" min="1" max="100" />
+								</div>
+								
+							</div>
+							<div class="dm-n iconfont icon-bofangqi-danmuguan btn"></div>
+						</div>
+						
+						
+						<div class=" btn iconfont icon-shezhi1 small"    style="display: none;"></div>
+						
+						<div class=" btn iconfont icon-xunhuan small"></div>
+						
+						<div class=" btn iconfont icon-quanping small full-btn"></div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="htplayer">
+				<ul class="ht-rightmenu">  
+					<li class="ht-copy-warp">
+						<textarea rows="1" class="ht-copy-input">复制弹幕</textarea>
+					</li>
+					<li class="ht-deldanmu">
+						屏蔽弹幕
+					</li>	
+					<li class="ht-speend-con">播放速度
+						<ul class="ht-speend">
+							<li>0.5</li>
+							<li>0.75</li>
+							<li>正常</li>
+							<li>1.25</li>
+							<li>1.5</li>
+							<li>2</li></ul>
+					</li>
+					<li class="ht-ratio">视频比例 默认</li>
+					<li class="ht-screenshot">截图</li>
+					<a href="https://github.com/haocity/htplayer/issues" target="_blank">
+						<li>意见反馈</li></a>
+					<a href="https://github.com/haocity/htplayer" target="_blank">
+						<li>About htplayer</li></a>
+				</ul>
+				<div class="ht-m">
+					<video class="ht-video" src=''></video>
+				</div>
+				
+				<div class="ht-dm"></div>
+				<div class="ht-end">
+					<img src="img/HTPLAYER.png" >
+				</div>
+			</div>
+			<div class="htplayer-right">
+				<div class="htplayer-right-close">▶</div>
+				<div class="ht-r-title ht-plr">
+					<span class="ht-live"><span class="ht-live-m">9</span>个小伙伴陪你看,632</span>
+				</div>
+					<div class="ht-danmaku-list-title ht-plr">
+						<div class="htdli-time">时间</div>
+						<div >弹幕内容</div>
+					</div>
+					<ul class="ht-danmaku-list ht-plr">
+						
+					</ul>
+			</div>
+			<div class="htplayer-right-c">
+				<div class="htplayer-right-c2">◀</div>
+			</div>
+			<style type="text/css" class="css">
+				
+			</style>
+		</div>`
+			if(typeof this.options.el=="string"){
+				this.options.el=document.querySelector(this.options.el)
+			}
+		
+			this.options.el.innerHTML=html
+			
+			
         this.ele = {
             'css': $c('css'),
             'video': $c('ht-video'),
@@ -56,6 +203,7 @@ class htplayer {
             'end': $c('ht-end'), //结束
 						'qxd':$c('qxd-m'),
 						'qxdt':$c('qxd-n'),
+						dmsend:$c('dmsend'),
             'rightmenu': {
                 main: $c('ht-rightmenu'), //右键菜单
                 copy: $c("ht-copy-warp"),
@@ -68,6 +216,9 @@ class htplayer {
             }
 
         }
+				
+				
+				
         //非全屏htbar显示
 
 
@@ -145,8 +296,9 @@ class htplayer {
 						this.ele.qxd.appendChild(e)
 						e.onclick=()=>{
 							this.ele.qxdt.innerText=item.text
-							if(item.type=='mp4'||item.type==null){
 								let t=this.ele.video.currentTime
+							if(item.type=='mp4'||item.type==null){
+							
 								this.ele.video.src=item.url
 							}else if(item.type=='hls'||item.type=='m3u8'){
 								if(this.ele.canPlayType('application/vnd.apple.mpegurl')){
@@ -542,6 +694,46 @@ class htplayer {
 
 
         })
+				//发送弹幕post
+				this.ele.dmsend.addEventListener('keydown',(e)=>{
+					if(e.keyCode==13&&this.ele.dmsend){
+						let ele=this.ele.dmsend;
+						console.log('send')
+						let postData = {
+								id: this.options.id,
+								text:ele.value,
+								color:ele.color||'#ffffff',
+								time: parseInt(this.ele.video.currentTime * 10),
+								place:ele.place||'1'
+						};
+						
+						this.send(ele.value,ele.color||'#ffffff',ele.place||'1',true)
+						postData = function(obj) {
+								// 转成post需要的字符串.
+								let str = "";
+								for (let prop in obj) {
+										str += prop + "=" + obj[prop] + "&";
+								}
+								return str;
+						}(postData);
+						ele.value=''
+						let xhr = new XMLHttpRequest();
+						xhr.open("POST", this.options.api+'/send/', true);
+						xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+						xhr.onreadystatechange = function() {
+								let XMLHttpReq = xhr;
+								if (XMLHttpReq.readyState == 4) {
+										if (XMLHttpReq.status == 200) {
+												let text = XMLHttpReq.responseText;
+												console.log(text);
+										}
+								}
+						};
+						xhr.send(postData);
+						
+					}
+				})
+				
 
 
 

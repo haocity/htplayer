@@ -87,7 +87,7 @@
 .ht-con-wrap {
     position: absolute;
     bottom: 0;
-    height: 100px;
+    height: 20px;
     width: 100%;
     z-index: 88;
 }
