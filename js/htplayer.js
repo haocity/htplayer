@@ -510,8 +510,16 @@ class htplayer {
             this.changerconfig()
         })
 
+				//缓冲
+				this.ele.video.addEventListener("waiting",()=>{
+					console.log("loding");
 
-
+				})
+				this.ele.video.addEventListener("playing",()=>{
+					
+				})
+				
+				
         //透明度条
         this.ele.hre1.addEventListener('change', () => {
             let t = this.ele.hre1.value / 100;
