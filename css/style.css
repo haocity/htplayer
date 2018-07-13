@@ -57,6 +57,9 @@
 	bottom: 0;
 	height: 200px;
 }
+.htplayer-w:not(.full) .ht-con{
+	opacity: 1!important;
+}
 .full{
 	height: 100%!important;
 	width: 100%!important;
@@ -483,6 +486,7 @@ input[type=range]::-webkit-slider-thumb {
 .ht-r-title {
     height: 60px;
     line-height: 60px;
+    border-top: 1px solid #eee;
 }
 
 span.ht-live-m {

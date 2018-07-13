@@ -259,7 +259,7 @@ class htplayer {
         //侧边栏
         if (this.options.showright) {
             this.ele.right.style.minHeight = this.data.height + 'px'
-            this.ele.dmlist.style.maxHeight = this.data.height - 94 + 'px'
+            this.ele.dmlist.style.maxHeight = this.data.height - 98 + 'px'
         }
 
 
